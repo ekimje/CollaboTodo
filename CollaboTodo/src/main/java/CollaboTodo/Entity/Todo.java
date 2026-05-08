@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -16,10 +16,10 @@ public class Todo {
     private Long id;
     private String content;
     private boolean completed;
-    private Date due_date;
+    private LocalDate due_date; // 마감일
     private Long user_id;
-    private Long roomid;
-    private LocalDateTime current_t;
+    private Long roomId;
+    private LocalDate current_t; // 등록일
 
     public Long getId() {
         return id;
@@ -45,11 +45,11 @@ public class Todo {
         this.completed = completed;
     }
 
-    public Date getDue_date() {
+    public LocalDate getDue_date() {
         return due_date;
     }
 
-    public void setDue_date(Date due_date) {
+    public void setDue_date(LocalDate due_date) {
         this.due_date = due_date;
     }
 
@@ -62,18 +62,18 @@ public class Todo {
     }
 
     public Long getRoomid() {
-        return roomid;
+        return roomId;
     }
 
-    public void setRoomid(Long roomid) {
-        this.roomid = roomid;
+    public void setRoomid(Long roomId) {
+        this.roomId = roomId;
     }
 
-    public LocalDateTime getCurrent_t() {
+    public LocalDate getCurrent_t() {
         return current_t;
     }
 
-    public void setCurrent_t(LocalDateTime current_t) {
-        this.current_t = current_t;
+    public void setCurrent_t(LocalDate current_t) {
+        this.current_t = LocalDate.now();
     }
 }

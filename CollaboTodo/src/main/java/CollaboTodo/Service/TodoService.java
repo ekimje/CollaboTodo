@@ -3,8 +3,10 @@ package CollaboTodo.Service;
 import CollaboTodo.Entity.Todo;
 import CollaboTodo.Repository.TodoRepository;
 import CollaboTodo.dto.TodoRequestDto;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -24,20 +26,17 @@ public class TodoService {
 
         todo.setContent(requestDto.getContent());
         todo.setCompleted(false);
-        return todoRepository.save(todo);
-    }
 
-    public Todo completedTodo(Long id, TodoRequestDto requestDto){
-        Todo todo = todoRepository.findById(id).orElseThrow();
-        todo.setCompleted(true);
-
+        LocalDate date = LocalDate.now();
+        todo.setCurrent_t(date); // 현재 날짜 생성
         return todoRepository.save(todo);
     }
 
     public Todo updateTodo(Long id, TodoRequestDto todoRequestDto){
         Todo todo = todoRepository.findById(id).orElseThrow();
 
-        todo.setCompleted(true);
+        todo.setContent(todoRequestDto.getContent());
+        todo.setCompleted(todoRequestDto.isCompleted());
         return todoRepository.save(todo);
     }
 
