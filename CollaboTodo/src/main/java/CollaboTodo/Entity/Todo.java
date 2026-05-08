@@ -18,7 +18,7 @@ public class Todo {
     private boolean completed;
     private Date due_date;
     private Long user_id;
-    private Long Roomid;
+    private Long roomid;
     private LocalDateTime current_t;
 
     public Long getId() {
@@ -62,11 +62,11 @@ public class Todo {
     }
 
     public Long getRoomid() {
-        return Roomid;
+        return roomid;
     }
 
     public void setRoomid(Long roomid) {
-        Roomid = roomid;
+        this.roomid = roomid;
     }
 
     public LocalDateTime getCurrent_t() {

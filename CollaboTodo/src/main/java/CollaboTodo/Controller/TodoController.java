@@ -3,11 +3,7 @@ package CollaboTodo.Controller;
 import CollaboTodo.Entity.Todo;
 import CollaboTodo.Service.TodoService;
 import CollaboTodo.dto.TodoRequestDto;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +24,20 @@ public class TodoController {
     @PostMapping
     public Todo createTodo(@RequestBody TodoRequestDto todoRequestDto) {
         return todoService.createTodo(todoRequestDto);
+    }
+
+    @PutMapping
+    public Todo updateTodo(@PathVariable Long id, @RequestBody TodoRequestDto todoRequestDto){
+        return todoService.updateTodo(id,todoRequestDto);
+    }
+
+    @PutMapping
+    public Todo completeTodo(@PathVariable Long id, @RequestBody TodoRequestDto todoRequestDto){
+        return todoService.completedTodo(id, todoRequestDto);
+    }
+
+    @DeleteMapping
+    public void deleteTodo(@PathVariable Long id){
+        todoService.deleteTodo(id);
     }
 }

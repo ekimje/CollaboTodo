@@ -27,7 +27,14 @@ public class TodoService {
         return todoRepository.save(todo);
     }
 
-    public Todo updateTodo(Long id){
+    public Todo completedTodo(Long id, TodoRequestDto requestDto){
+        Todo todo = todoRepository.findById(id).orElseThrow();
+        todo.setCompleted(true);
+
+        return todoRepository.save(todo);
+    }
+
+    public Todo updateTodo(Long id, TodoRequestDto todoRequestDto){
         Todo todo = todoRepository.findById(id).orElseThrow();
 
         todo.setCompleted(true);
