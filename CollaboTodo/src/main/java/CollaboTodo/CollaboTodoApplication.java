@@ -6,9 +6,7 @@ import java.util.*;
 
 @SpringBootApplication
 public class CollaboTodoApplication {
-
 	public static void main(String[] args) {
-		SpringApplication.run(CollaboTodoApplication.class, args);
+        SpringApplication.run(CollaboTodoApplication.class, args);
 	}
-
 }
