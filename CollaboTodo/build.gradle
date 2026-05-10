@@ -19,13 +19,11 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-    // springdoc
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0' // 최신 버전 사용 권장    compileOnly 'org.projectlombok:lombok'
 	//mysql
-    implementation('org.springframework.boot:spring-boot-stater-data-jpa')
-    runtimeOnly('com.mysql:mysql-connector-j')
-    runtimeOnly 'com.h2database:h2'
-    compileOnly('org.projectlombok:lombok')
+	runtimeOnly('com.mysql:mysql-connector-j')
+	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testCompileOnly 'org.projectlombok:lombok'

@@ -1,32 +1,51 @@
 package CollaboTodo.Service;
 
-import CollaboTodo.model.Todo;
+import CollaboTodo.Entity.Todo;
+import CollaboTodo.Repository.TodoRepository;
+import CollaboTodo.dto.TodoRequestDto;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class TodoService {
-    private final List<Todo> stort = new ArrayList<>();
-    private Long seq = 1L;
-    //생성
-    public Todo createTodo(String title) {
+    private final TodoRepository todoRepository;
+
+    public TodoService(TodoRepository todoRepository){
+        this.todoRepository = todoRepository;
+    }
+
+    public List<Todo> getTodo(){
+        return todoRepository.findAll();
+    }
+
+    public Todo createTodo(TodoRequestDto requestDto){
         Todo todo = new Todo();
-        todo.setId(seq++);
-        todo.setTitle(title);
-        todo.setDone(false);
 
-        return todo;
+        todo.setContent(requestDto.getContent());
+        todo.setCompleted(false);
+
+        LocalDate date = LocalDate.now();
+        todo.setCurrent_t(date); // 현재 날짜 생성
+        return todoRepository.save(todo);
     }
-    //삭제
+
+    public Todo updateTodo(Long id, TodoRequestDto todoRequestDto){
+        Todo todo = todoRepository.findById(id).orElseThrow();
+
+        todo.setContent(todoRequestDto.getContent());
+        todo.setCompleted(todoRequestDto.isCompleted());
+        return todoRepository.save(todo);
+    }
+
     public void deleteTodo(Long id){
+//        Todo todo = todoRepository.findById(id).orElseThrow();
+//
+//        todoRepository.delete(todo);
 
+        todoRepository.deleteById(id);
     }
 
-    //수정
-    public void updateTodo(){}
-
-    //완료
-    public void toggleTodo(){}
 }
