@@ -2,6 +2,7 @@ package CollaboTodo;
 
 import CollaboTodo.Entity.Todo;
 import CollaboTodo.Repository.TodoRepository;
+import CollaboTodo.UI.TodoCalendar;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,23 +18,25 @@ public class CollaboTodoApplication {
 	}
 
 	@Bean
-	CommandLineRunner todo(TodoRepository todoRepository){
-		return args -> {
-			Todo todo = new Todo();
+	CommandLineRunner todo(TodoRepository todoRepository) {
+        return args -> {
+            Todo todo = new Todo();
+            TodoCalendar cal = new TodoCalendar();
+            cal.printCalendar();
 
-			todo.setContent("스프링공부");
+            todo.setContent("스프링공부");
 
-			Todo savedTodo = todoRepository.save(todo);
+            Todo savedTodo = todoRepository.save(todo);
 
-			System.out.println(savedTodo.getId());
+            System.out.println(savedTodo.getId());
 
-			savedTodo.setCompleted(true);
-			todoRepository.save(savedTodo);
+            savedTodo.setCompleted(true);
+            todoRepository.save(savedTodo);
 
-			todoRepository.delete(savedTodo);
-			System.out.println("삭제 완료");
-		};
-	}
+            todoRepository.delete(savedTodo);
+            System.out.println("삭제 완료");
+        };
+    }
 
 
 }

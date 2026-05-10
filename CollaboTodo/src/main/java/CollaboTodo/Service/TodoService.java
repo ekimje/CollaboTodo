@@ -3,7 +3,6 @@ package CollaboTodo.Service;
 import CollaboTodo.Entity.Todo;
 import CollaboTodo.Repository.TodoRepository;
 import CollaboTodo.dto.TodoRequestDto;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -29,8 +28,16 @@ public class TodoService {
 
         LocalDate date = LocalDate.now();
         todo.setCurrent_t(date); // 현재 날짜 생성
+        LocalDate prevDate = date.minusDays(1);
+        LocalDate nextDate = date.plusDays(1);
         return todoRepository.save(todo);
     }
+    
+    // 조회 날짜 제공
+    public List<Todo> getTodoListByDate(LocalDate date){
+        return todoRepository.findByDate(date);
+    }
+
 
     public Todo updateTodo(Long id, TodoRequestDto todoRequestDto){
         Todo todo = todoRepository.findById(id).orElseThrow();
