@@ -24,18 +24,16 @@ public class TodoService {
         Todo todo = new Todo();
 
         todo.setContent(requestDto.getContent());
-        todo.setCompleted(false);
+        todo.setCompleted(requestDto.isCompleted());
+        todo.setDueDate(requestDto.getDueDate());
+        todo.setCreatedAt(LocalDate.now());
 
-        LocalDate date = LocalDate.now();
-        todo.setCurrent_t(date); // 현재 날짜 생성
-        LocalDate prevDate = date.minusDays(1);
-        LocalDate nextDate = date.plusDays(1);
         return todoRepository.save(todo);
     }
     
     // 조회 날짜 제공
     public List<Todo> getTodoListByDate(LocalDate date){
-        return todoRepository.findByDate(date);
+        return todoRepository.findByDueDate(date);
     }
 
 
@@ -44,14 +42,11 @@ public class TodoService {
 
         todo.setContent(todoRequestDto.getContent());
         todo.setCompleted(todoRequestDto.isCompleted());
+        todo.setDueDate(todoRequestDto.getDueDate());
         return todoRepository.save(todo);
     }
 
     public void deleteTodo(Long id){
-//        Todo todo = todoRepository.findById(id).orElseThrow();
-//
-//        todoRepository.delete(todo);
-
         todoRepository.deleteById(id);
     }
 

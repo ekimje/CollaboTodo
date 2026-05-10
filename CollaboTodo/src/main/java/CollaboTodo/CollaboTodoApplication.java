@@ -21,12 +21,15 @@ public class CollaboTodoApplication {
 	CommandLineRunner todo(TodoRepository todoRepository) {
         return args -> {
             Todo todo = new Todo();
+            Todo todo1 = new Todo();
             TodoCalendar cal = new TodoCalendar();
             cal.printCalendar();
 
             todo.setContent("스프링공부");
+            todo1.setContent("달력 조회");
 
             Todo savedTodo = todoRepository.save(todo);
+            Todo savedTodo1 = todoRepository.save(todo1);
 
             System.out.println(savedTodo.getId());
 

@@ -2,6 +2,7 @@ package CollaboTodo.Controller;
 
 import CollaboTodo.Entity.Todo;
 import CollaboTodo.Service.TodoService;
+import CollaboTodo.UI.TodoCalendar;
 import CollaboTodo.dto.TodoRequestDto;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,12 @@ public class TodoController {
     @GetMapping("/date/{date}")
     public List<Todo> getTodoDate(@PathVariable LocalDate date){
         return todoService.getTodoListByDate(date);
+    }
+
+    @GetMapping("/calendar")
+    public String calendar(){
+        TodoCalendar cal = new TodoCalendar();
+        return cal.printCalendar();
     }
 
     @PostMapping
