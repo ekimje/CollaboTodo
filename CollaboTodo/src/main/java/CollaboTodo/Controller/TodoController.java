@@ -3,7 +3,9 @@ package CollaboTodo.Controller;
 import CollaboTodo.Entity.Todo;
 import CollaboTodo.Service.TodoService;
 import CollaboTodo.UI.TodoCalendar;
+import CollaboTodo.dto.TodoDateResponseDto;
 import CollaboTodo.dto.TodoRequestDto;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -23,11 +25,21 @@ public class TodoController {
         return todoService.getTodo();
     }
 
+    @GetMapping(params = "date")
+    public TodoDateResponseDto getTodoByDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date){
+        return new TodoDateResponseDto(date, todoService.getTodoListByDate(date));
+    }
+
     @GetMapping("/date/{date}")
-    public List<Todo> getTodoDate(@PathVariable LocalDate date){
+    public List<Todo> getTodoDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date){
         return todoService.getTodoListByDate(date);
     }
 
+    @GetMapping("/date/{date}/previous")
+    public TodoDateResponseDto getPreviousDateTodos(@PathVariable @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate date){
+        LocalDate previousDate = date.minusDays(1);
+        return new TodoDateResponseDto(previousDate, todoService.getPreviousDateTodoList(date));
+    }
     @GetMapping("/calendar")
     public String calendar(){
         TodoCalendar cal = new TodoCalendar();

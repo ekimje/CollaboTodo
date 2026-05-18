@@ -73,6 +73,5 @@ public class Todo {
     }
 
     public void setCreatedAt(LocalDate currentAt) {
-        this.currentAt = LocalDate.now();
-    }
+        this.currentAt = currentAt == null ? LocalDate.now() : currentAt;}
 }
