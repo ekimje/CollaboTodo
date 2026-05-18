@@ -5,6 +5,7 @@ import CollaboTodo.Service.TodoService;
 import CollaboTodo.UI.TodoCalendar;
 import CollaboTodo.dto.TodoDateResponseDto;
 import CollaboTodo.dto.TodoRequestDto;
+import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,13 @@ public class TodoController {
         LocalDate previousDate = date.minusDays(1);
         return new TodoDateResponseDto(previousDate, todoService.getPreviousDateTodoList(date));
     }
+
+    @GetMapping("/date/{date}next")
+    public TodoDateResponseDto getNextDateTodos(@PathVariable @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)LocalDate date){
+        LocalDate nextDate = date.plusDays(1);
+        return new TodoDateResponseDto(nextDate,todoService.getNextDateTodoList(date));
+    }
+
     @GetMapping("/calendar")
     public String calendar(){
         TodoCalendar cal = new TodoCalendar();

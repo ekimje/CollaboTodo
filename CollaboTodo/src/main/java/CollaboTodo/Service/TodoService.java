@@ -47,6 +47,10 @@ public class TodoService {
         return getTodoListByDate(date.minusDays(1));
     }
 
+    public List<Todo> getNextDateTodoList(LocalDate date){
+        return getTodoListByDate(date.plusDays(1));
+    }
+
     public Todo updateTodo(Long id, TodoRequestDto todoRequestDto){
         Todo todo = todoRepository.findById(id).orElseThrow();
 
