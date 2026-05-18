@@ -1,12 +1,21 @@
 package CollaboTodo.Entity;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "users")
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, unique = true)
     private String email;
-    private String password;
-    private LocalDateTime current_at;
+    @Column(nullable = false)
+    private String name;
+    private LocalDateTime currentAt;
 
     public Long getId() {
         return id;
@@ -24,19 +33,19 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getName() {
+        return name;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public LocalDateTime getCurrent_at() {
-        return current_at;
+    public LocalDateTime getCurrentAt() {
+        return currentAt;
     }
 
-    public void setCurrent_at(LocalDateTime current_at) {
-        this.current_at = current_at;
+    public void setCurrentAt(LocalDateTime currentAt) {
+        this.currentAt = currentAt == null ? LocalDateTime.now() : currentAt;
     }
 }

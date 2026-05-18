@@ -1,27 +1,23 @@
-package CollaboTodo.Entity;
+package CollaboTodo.dto;
 
-import jakarta.persistence.*;
+import CollaboTodo.Entity.Room;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "rooms")
-public class Room {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class RoomResponseDto {
     private Long roomId;
-
-    @Column(nullable = false)
     private String roomName;
-
-    @Column(nullable = false, unique = true)
     private String inviteCode;
-
-    @Column(nullable = false)
     private Long ownerUserId;
+    private LocalDateTime createdAt;
 
-    private LocalDateTime currentAt;
+    public RoomResponseDto(Room room){
+        this.roomId = room.getRoomId();
+        this.roomName = room.getRoomName();
+        this.inviteCode = room.getInviteCode();
+        this.ownerUserId = room.getOwnerUserId();
+        this.createdAt = room.getCurrentAt();
+    }
 
     public Long getRoomId() {
         return roomId;
@@ -55,11 +51,11 @@ public class Room {
         this.ownerUserId = ownerUserId;
     }
 
-    public LocalDateTime getCurrentAt() {
-        return currentAt;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCurrentAt(LocalDateTime currentAt) {
-        this.currentAt = currentAt == null ? LocalDateTime.now():currentAt;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
