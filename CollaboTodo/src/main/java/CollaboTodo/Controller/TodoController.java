@@ -5,7 +5,6 @@ import CollaboTodo.Service.TodoService;
 import CollaboTodo.UI.TodoCalendar;
 import CollaboTodo.dto.TodoDateResponseDto;
 import CollaboTodo.dto.TodoRequestDto;
-import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +41,7 @@ public class TodoController {
         return new TodoDateResponseDto(previousDate, todoService.getPreviousDateTodoList(date));
     }
 
-    @GetMapping("/date/{date}next")
+    @GetMapping("/date/{date}/next")
     public TodoDateResponseDto getNextDateTodos(@PathVariable @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)LocalDate date){
         LocalDate nextDate = date.plusDays(1);
         return new TodoDateResponseDto(nextDate,todoService.getNextDateTodoList(date));
@@ -62,6 +61,16 @@ public class TodoController {
     @PutMapping("/{id}")
     public Todo updateTodo(@PathVariable Long id, @RequestBody TodoRequestDto todoRequestDto){
         return todoService.updateTodo(id,todoRequestDto);
+    }
+
+    @PatchMapping("/{id}/completed")
+    public Todo updateCompleted(@PathVariable Long id, @RequestParam boolean completed){
+        return todoService.updateCompleted(id,completed);
+    }
+
+    @PatchMapping("/{id}/complete")
+    public Todo completeTodo(@PathVariable Long id){
+        return todoService.completeTodo(id);
     }
 
     @DeleteMapping("/{id}")

@@ -1,7 +1,10 @@
 package CollaboTodo.Controller;
 
+import CollaboTodo.Entity.Todo;
 import CollaboTodo.Service.RoomService;
 import CollaboTodo.Service.TodoService;
+import CollaboTodo.dto.RoomJoinRequestDto;
+import CollaboTodo.dto.RoomRequestDto;
 import CollaboTodo.dto.RoomResponseDto;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +31,19 @@ public class RoomController {
         return roomService.getRoom(roomId);
     }
 
+    @GetMapping("/{roomId}/todos")
+    public List<Todo> getRoomTodos(@PathVariable Long roomId){
+        roomService.getRoom(roomId);
+        return todoService.getTodoListByRoom(roomId);
+    }
+
     @PostMapping
-    public RoomResponseDto createRoom(@RequestBody RoomResponseDto roomResponseDto){
-        return roomService.createRoom(roomResponseDto);
+    public RoomResponseDto createRoom(@RequestBody RoomRequestDto roomRequestDto){
+        return roomService.createRoom(roomRequestDto);
+    }
+
+    @PostMapping("/join")
+    public RoomResponseDto joinRoom(@RequestBody RoomJoinRequestDto roomJoinRequestDto){
+        return roomService.joinRoom(roomJoinRequestDto);
     }
 }

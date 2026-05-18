@@ -11,5 +11,7 @@ import java.util.List;
 // 이러면 findAll() , save() 같은 메서드 자동 사용 가능.
 public interface TodoRepository extends JpaRepository<Todo, Long> {
     List<Todo> findByDueDate(LocalDate dueDate, Sort sort);
+
+    List<Todo> findByRoomId(Long roomId, Sort sort);
 }
 

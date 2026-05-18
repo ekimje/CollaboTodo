@@ -26,13 +26,13 @@ public class TodoCalendar{
 
         sb.append("일\t월\t화\t수\t목\t금\t토\t");
         for(int i=0; i<dayOfWeek; i++){
-            System.out.print("\t");
+            sb.append("\t");
         }
         for(int date=1; date<=day; date++){
-            System.out.printf("%d\t",date);
+            sb.append(date).append("\t");
             dayOfWeek++;
             if(dayOfWeek%7==0){
-                System.out.println();
+                sb.append("\n");
             }
         }
         return sb.toString();

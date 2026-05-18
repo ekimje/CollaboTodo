@@ -27,20 +27,20 @@ public class TodoService {
         return todoRepository.findAll(TODO_SORT);
     }
 
-    public Todo createTodo(TodoRequestDto requestDto){
+    public Todo createTodo(TodoRequestDto requestDto) {
         Todo todo = new Todo();
-
-        todo.setContent(requestDto.getContent());
-        todo.setCompleted(requestDto.isCompleted());
-        todo.setDueDate(requestDto.getDueDate());
+        applyTodoRequest(todo, requestDto);
         todo.setCreatedAt(LocalDate.now());
 
         return todoRepository.save(todo);
     }
-    
     // 조회 날짜 제공
     public List<Todo> getTodoListByDate(LocalDate date){
         return todoRepository.findByDueDate(date,TODO_SORT);
+    }
+
+    public List<Todo> getTodoListByRoom(Long roomId){
+        return todoRepository.findByRoomId(roomId,TODO_SORT);
     }
 
     public List<Todo> getPreviousDateTodoList(LocalDate date){
@@ -52,16 +52,36 @@ public class TodoService {
     }
 
     public Todo updateTodo(Long id, TodoRequestDto todoRequestDto){
-        Todo todo = todoRepository.findById(id).orElseThrow();
-
-        todo.setContent(todoRequestDto.getContent());
-        todo.setCompleted(todoRequestDto.isCompleted());
-        todo.setDueDate(todoRequestDto.getDueDate());
+        Todo todo = findTodo(id);
+        applyTodoRequest(todo,todoRequestDto);
         return todoRepository.save(todo);
+    }
+
+    public Todo updateCompleted(Long id, boolean completed){
+        Todo todo = findTodo(id);
+        todo.setCompleted(completed);
+
+        return todoRepository.save(todo);
+    }
+
+    public Todo completeTodo(Long id){
+        return updateCompleted(id,true);
     }
 
     public void deleteTodo(Long id){
         todoRepository.deleteById(id);
+    }
+
+    public Todo findTodo(Long id){
+        return todoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Todo입니다."));
+    }
+
+    private void applyTodoRequest(Todo todo, TodoRequestDto requestDto){
+        todo.setContent(requestDto.getContent());
+        todo.setCompleted(requestDto.isCompleted());
+        todo.setDueDate(requestDto.getDueDate());
+        todo.setUserId(requestDto.getUserId());
+        todo.setRoomId(requestDto.getRoomId());
     }
 
 }

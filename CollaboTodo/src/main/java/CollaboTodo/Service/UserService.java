@@ -24,9 +24,9 @@ public class UserService {
         return userRepository.findById(id).orElseThrow();
     }
 
-    public User createUSer(UserRequestDto userRequestDto){
+    public User createUser(UserRequestDto userRequestDto){
         if(userRepository.existsByEmail(userRequestDto.getEmail())){
-            throw new IllegalArgumentException("이미 사용주인 이메일입니다.");
+            throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
         }
         User user = new User();
         user.setEmail(userRequestDto.getEmail());
